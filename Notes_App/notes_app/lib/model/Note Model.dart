@@ -1,9 +1,9 @@
 class noteModel {
-  String? notesId;
+  int? notesId;
   String? notesTitle;
   String? notesContent;
   String? notesImage;
-  String? notesUsers;
+  int? notesUsers;
 
   noteModel(
       {this.notesId,

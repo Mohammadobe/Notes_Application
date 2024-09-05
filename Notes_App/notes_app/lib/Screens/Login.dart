@@ -20,6 +20,8 @@ class _LoginState extends State<Login> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  bool _passwordVisible = true;
+
   Crud crud = Crud();
   bool isLooding = false;
 
@@ -66,14 +68,31 @@ class _LoginState extends State<Login> {
                       return validInput(val!, 3, 20);
                     },
                     myController: email,
-                    hint: "Email Or Username",
+                    label: "Email Or Username",
+                    prefix: Icon(Icons.email),
                   ),
-                  customTextFormField(
+                  customTextFormField1(
+                    pass: _passwordVisible,
                     valid: (val){
                       return validInput(val!, 3, 20);
                     },
                     myController: password,
-                    hint: "Password",
+                    label: "Password",
+                    prefix: Icon(Icons.password),
+                    suff: IconButton(
+                      onPressed: (){
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      }, 
+                      icon: Container(
+                        child: Icon(
+                          _passwordVisible 
+                          ? Icons.visibility_off 
+                          : Icons.visibility,
+                        )
+                      )
+                    ),
                   ),
                   MaterialButton(
                     padding: EdgeInsets.symmetric(vertical: 10 , horizontal: 70),

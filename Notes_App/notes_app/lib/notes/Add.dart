@@ -44,7 +44,7 @@ class _addNoteState extends State<addNote>{
       isLooding = false;
       setState(() {});
       if(response["Status"] == "Success"){
-        Navigator.pushReplacementNamed(context, "Home");
+        Navigator.pushNamedAndRemoveUntil(context, "Home" , (route) => false);
       } else {
         //
       }
@@ -56,8 +56,8 @@ class _addNoteState extends State<addNote>{
     return Scaffold(
       appBar: AppBar(
         title: Container(
-          padding: EdgeInsets.only(left: 60),
-          child: Text('Add Note')
+          padding: EdgeInsets.only(right: 20),
+          child: Center(child: Text('Add Note'))
         ),
         backgroundColor: Colors.blue,
       ),
@@ -70,14 +70,16 @@ class _addNoteState extends State<addNote>{
           child: ListView(
             children: [
               customTextFormField(
-                hint: 'Title', 
+                prefix: Icon(Icons.title),
+                label: 'Title', 
                 myController: title, 
                 valid: (val){
                   return validInput(val!, 1, 40);
                 }
               ),
               customTextFormField(
-                hint: 'Content', 
+                label: 'Content', 
+                prefix: Icon(Icons.content_copy),
                 myController: content, 
                 valid: (val){
                   return validInput(val!, 10, 255);

@@ -49,7 +49,7 @@ class _editNoteState extends State<editNote>{
       isLooding = false;
       setState(() {});
       if(response["Status"] == "Success"){
-        Navigator.pushReplacementNamed(context, "Home");
+        Navigator.pushNamedAndRemoveUntil(context, "Home" , (route) => false);
       } else {
         //
       }
@@ -82,14 +82,16 @@ class _editNoteState extends State<editNote>{
           child: ListView(
             children: [
               customTextFormField(
-                hint: 'Title', 
+                label: 'Title', 
+                prefix: Icon(Icons.title),
                 myController: title, 
                 valid: (val){
                   return validInput(val!, 1, 40);
                 }
               ),
               customTextFormField(
-                hint: 'Content', 
+                label: 'Content', 
+                prefix: Icon(Icons.content_copy),
                 myController: content, 
                 valid: (val){
                   return validInput(val!, 10, 255);

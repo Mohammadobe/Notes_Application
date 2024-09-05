@@ -17,7 +17,11 @@ class _SignupState extends State<Signup> {
 
   TextEditingController username= TextEditingController();
   TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController password1 = TextEditingController();
+  TextEditingController password2 = TextEditingController();
+
+  bool _passwordVisible1 = true;
+  bool _passwordVisible2 = true;
 
   Crud _crud = Crud();
   bool isLooding = false;
@@ -29,7 +33,7 @@ class _SignupState extends State<Signup> {
       var response = await _crud.postRequest(linkSignUp , {
         "username": username.text,
         "email": email.text,
-        "password": password.text,
+        "password": password1.text,
       });
       isLooding = false;
       setState(() {});
@@ -60,21 +64,68 @@ class _SignupState extends State<Signup> {
                       return validInput(val!, 3, 20);
                     },
                     myController: username,
-                    hint: "Username",
+                    label: "Username",
+                    prefix: Icon(Icons.person),
                   ),
                   customTextFormField(
                     valid: (val){
                       return validInput(val!, 5, 40);
                     },
                     myController: email,
-                    hint: "Email",
+                    label: "Email",
+                    prefix: Icon(Icons.email),
                   ),
-                  customTextFormField(
+                  customTextFormField1(
+                    pass: _passwordVisible1,
                     valid: (val){
                       return validInput(val!, 3, 10);
                     },
-                    myController: password,
-                    hint: "Password",
+                    myController: password1,
+                    label: "Password",
+                    prefix: Icon(Icons.password),
+                    suff: IconButton(
+                      onPressed: (){
+                        setState(() {
+                          _passwordVisible1 = !_passwordVisible1;
+                        });
+                      }, 
+                      icon: Container(
+                        child: Icon(
+                          _passwordVisible1 
+                          ? Icons.visibility_off 
+                          : Icons.visibility,
+                        )
+                      )
+                    ),
+                  ),
+                  customTextFormField1(
+                    pass: _passwordVisible2,
+                    valid: (val){
+                      if(val!.isEmpty || val.length < 3 || val.length > 10){
+                        return validInput(val, 3, 10);
+                      }
+                      if(val != password1.text){
+                        return 'كلمة السر غير متوافقه';
+                      }
+                      return null;
+                    },
+                    myController: password2,
+                    label: "Confirm Password",
+                    prefix: Icon(Icons.password),
+                    suff: IconButton(
+                      onPressed: (){
+                        setState(() {
+                          _passwordVisible2 = !_passwordVisible2;
+                        });
+                      }, 
+                      icon: Container(
+                        child: Icon(
+                          _passwordVisible2 
+                          ? Icons.visibility_off 
+                          : Icons.visibility,
+                        )
+                      )
+                    ),
                   ),
                   MaterialButton(
                     padding: EdgeInsets.symmetric(vertical: 10 , horizontal: 70),
