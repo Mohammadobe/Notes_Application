@@ -14,7 +14,7 @@
     $count = $stmt->rowCount();
 
     if($count > 0){
-        echo json_encode(array("Status" => "Success"));
+        echo json_encode(array("Status" => "Success")); 
     } else{
         echo json_encode(array("Status" => "Failed"));
     }
